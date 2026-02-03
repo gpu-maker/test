@@ -1,65 +1,72 @@
 const story = {
   start: {
-    text: "You wake up at the edge of a dark forest. Two paths lie ahead.",
+    text: "You stand at the edge of a pixel forest. Two paths await.",
+    image: "images/forest.png",
     choices: [
-      { text: "Take the left path", next: "leftPath" },
-      { text: "Take the right path", next: "rightPath" }
+      { text: "LEFT PATH", next: "leftPath" },
+      { text: "RIGHT PATH", next: "rightPath" }
     ]
   },
 
   leftPath: {
-    text: "You walk left and find a quiet river flowing gently.",
+    text: "A river shimmers in chunky pixels.",
+    image: "images/river.png",
     choices: [
-      { text: "Drink from the river", next: "river" },
-      { text: "Follow the river downstream", next: "village" }
+      { text: "DRINK WATER", next: "river" },
+      { text: "FOLLOW RIVER", next: "village" }
     ]
   },
 
   rightPath: {
-    text: "The right path leads to a cave with strange noises inside.",
+    text: "A cave breathes darkness.",
+    image: "images/cave.png",
     choices: [
-      { text: "Enter the cave", next: "cave" },
-      { text: "Run back", next: "start" }
+      { text: "ENTER CAVE", next: "cave" },
+      { text: "RUN BACK", next: "start" }
     ]
   },
 
   river: {
-    text: "The water refreshes you. You feel stronger. You win! 🎉",
+    text: "HP RESTORED. YOU WIN.",
+    image: "images/river.png",
     choices: [
-      { text: "Play again", next: "start" }
+      { text: "PLAY AGAIN", next: "start" }
     ]
   },
 
   village: {
-    text: "You find a friendly village and rest safely. You win! 🏡",
+    text: "A village of 8-bit heroes welcomes you.",
+    image: "images/village.png",
     choices: [
-      { text: "Play again", next: "start" }
+      { text: "PLAY AGAIN", next: "start" }
     ]
   },
 
   cave: {
-    text: "A monster appears! You were not prepared. Game over 💀",
+    text: "YOU WERE NOT READY.",
+    image: "images/cave.png",
     choices: [
-      { text: "Try again", next: "start" }
+      { text: "TRY AGAIN", next: "start" }
     ]
   }
 };
 
 const storyText = document.getElementById("story-text");
+const storyImage = document.getElementById("story-image");
 const choicesDiv = document.getElementById("choices");
 
-function showStory(nodeKey) {
-  const node = story[nodeKey];
+function showStory(key) {
+  const node = story[key];
   storyText.textContent = node.text;
-  choicesDiv.innerHTML = "";
+  storyImage.src = node.image;
 
+  choicesDiv.innerHTML = "";
   node.choices.forEach(choice => {
-    const button = document.createElement("button");
-    button.textContent = choice.text;
-    button.onclick = () => showStory(choice.next);
-    choicesDiv.appendChild(button);
+    const btn = document.createElement("button");
+    btn.textContent = choice.text;
+    btn.onclick = () => showStory(choice.next);
+    choicesDiv.appendChild(btn);
   });
 }
 
-// Start the game
 showStory("start");
